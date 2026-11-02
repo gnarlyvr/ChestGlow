@@ -37,7 +37,8 @@ jobs:
           fi
 
       - name: Set the version in the .toc
-        run: perl -pi -e 's/^## Version:[^\r\n]*/## Version: $ENV{VERSION}/' "$ADDON.toc"
+        run: |
+          perl -pi -e "s/^\043\043 Version:[^\r\n]*/\043\043 Version: $VERSION/" "$ADDON.toc"
 
       - name: Commit, tag and push
         run: |
