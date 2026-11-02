@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: |cffffd100Chest|rGlow
+## Author: Gnarly
+## Notes: Yellow glow on caches you can afford, with a minimap button and control panel. Needs game 0.139.2 or newer. /chestglow opens the panel.
+## Version: 1.1.0
+## SavedVariables: ChestGlowDB
+ChestGlow.lua

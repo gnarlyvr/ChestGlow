@@ -1,0 +1,56 @@
+name: Release
+
+# Adds a "Run workflow" button under Actions -> Release. Type the new version there and the
+# workflow sets "## Version:" in the .toc, commits, tags, builds the zip and creates the release.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "New version, for example 1.2.0"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      ADDON: ChestGlow
+      VERSION: ${{ inputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the version number
+        run: |
+          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::Write the version as three numbers, for example 1.2.0 (no v in front)"
+            exit 1
+          fi
+          if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" > /dev/null; then
+            echo "::error::Version $VERSION exists already. Pick a higher number"
+            exit 1
+          fi
+          if ! grep -q '^## Version:' "$ADDON.toc"; then
+            echo "::error::$ADDON.toc has no '## Version:' line, or ADDON in this file is not the name of the .toc"
+            exit 1
+          fi
+
+      - name: Set the version in the .toc
+        run: perl -pi -e 's/^## Version:[^\r\n]*/## Version: $ENV{VERSION}/' "$ADDON.toc"
+
+      - name: Commit, tag and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Release v$VERSION" || echo "The .toc already had version $VERSION"
+          git tag "v$VERSION"
+          git push origin HEAD "v$VERSION"
+
+      - name: Build the zip
+        run: git archive --format=zip --prefix="$ADDON/" -o "$ADDON.zip" "v$VERSION"
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "v$VERSION" "$ADDON.zip" --title "$ADDON v$VERSION" --generate-notes
