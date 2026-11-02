@@ -1,5 +1,9 @@
 # ChestGlow
 
+<p align="center">
+  <img src="images/ChestGlowLogo256.png" alt="ChestGlow" width="256">
+</p>
+
 A yellow glow and sparks on the caches in **Azeroth Survivors**, with a minimap button and a settings panel.
 
 Caches you can afford glow. Caches you cannot buy yet stay dim. A notice appears the moment your gold covers the next one.
@@ -16,6 +20,23 @@ Needs game **0.139.2** or newer (world anchors). Works alongside SurvivorsDragon
 - **Size:** small, medium, or large.
 - **Minimap button:** left-click opens the panel, right-click turns the glow on or off, drag moves the button. It works on round and square minimaps.
 - The panel stays under the level-up cards and remembers where you put it.
+
+## Screenshots
+
+A cache you can afford glows. One you cannot buy yet stays dim.
+
+<p>
+  <img src="images/Screenshot-ChestGlowing.png" alt="A cache glowing yellow" width="420">
+  <img src="images/Screenshot-ChestNoGlow.png" alt="A cache with no glow" width="420">
+</p>
+
+Several caches stay easy to spot while you fight.
+
+<img src="images/Screenshot-ChestsMultiple.png" alt="Several caches marked during a fight" width="720">
+
+The minimap button opens this panel. Left-click opens it, right-click turns the glow on or off, and you can drag the button around the minimap.
+
+<img src="images/Screenshot-ControlPanel.png" alt="ChestGlow settings panel" width="420">
 
 ## Install
 
